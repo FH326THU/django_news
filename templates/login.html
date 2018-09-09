@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block body %}
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+Username: <input type="text" id="username"><br>
+Password: <input type="password" id="password"><br>
+<button onclick="getnow()">Login</button>
+<script>
+function getnow(){
+    $.ajax({
+        async: false,
+        type: "POST",
+        url:'/login/',
+        contentType : "application/x-www-form-urlencoded; charset=utf-8",
+        data: {
+            username: $('#username').val(),
+            passwordmd5: md5($('#password').val())
+        },
+        dataType: "text",
+        success: function (data) {
+            if (JSON.parse(data)['state'] === 'ok') {
+                alert("Log in successfully!");
+                window.location.href='/admin';
+            }
+            else {
+                alert("Wrong username or password, please check and login again!")
+            }
+        },
+        error: function () {
+            alert("Error! Please check your Internet!")
+        }
+    })
+}
+</script>
+{% endblock %}

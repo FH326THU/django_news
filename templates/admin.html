@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block body %}
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function send_del(id){
+        $.ajax({
+            async: false,
+            type: "POST",
+            url:'/del/' + id.toString(),
+            contentType : "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "text",
+            success: function (data) {
+                if (JSON.parse(data)['state'] === 'ok') {
+                    alert("Delete successfully!");
+                    window.location.href='/admin';
+                }
+                else {
+                    alert("Wrong id or not logged in!")
+                    window.location.href='/admin'
+                }
+            },
+            error: function () {
+                alert("Error! Please check your Internet!")
+            }
+        })
+    }
+    function send_all_del() {
+        var chkIds = "";
+        $("input:checkbox:checked").each(function(i){
+            chkIds += $(this).attr("id") + ",";
+        });
+        $.ajax({
+            async: false,
+            type: "POST",
+            url:'/del/',
+            contentType : "application/x-www-form-urlencoded; charset=utf-8",
+            data: {'data': chkIds},
+            dataType: "text",
+            success: function (data) {
+                if (JSON.parse(data)['state'] === 'ok') {
+                    alert("Delete successfully!");
+                    window.location.href='/admin';
+                }
+                else {
+                    alert("Wrong id or not logged in!")
+                    window.location.href='/admin'
+                }
+            },
+            error: function () {
+                alert("Error! Please check your Internet!")
+            }
+        })
+    }
+</script>
+<h1>News list for admin:</h1>
+    <button onclick="send_all_del()">delete selected</button>
+    <a href="/admin_recover/"><button>recover deleted</button></a>
+<br><br>
+    <table class="table">
+{% for i in news %}
+  <tr>
+    <td><input type="checkbox" id="{{ i.id }}"/></td>
+    <td><a href="/news_content/{{ i.id }}">{{ i.title }}</a></td>
+    <td><button onclick="send_del({{ i.id }})">Delete</button></td>
+    <td><a href="{{ i.url }}"><button>Original Page</button></a></td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}FH News System{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'semantic.min.css' %}">
+</head>
+<body style="position: relative; max-width: 800px; margin: 0 auto">
+<header>
+<div style="position: absolute; right: 0px">
+    <a href="/">Home</a>&nbsp;
+    {% if loggedin %}
+         | <a href="/admin">Admin</a>&nbsp;
+         | <a href="/logout">Logout</a>
+    {% else %}
+         | <a href="/login">Login</a>
+    {% endif %}
+</div>
+</header>
+<div style="position: absolute; top: 30px;">{% block body %}
+    <h1>Welcome</h1>
+    <a href="/">Goto Homepage</a>
+{% endblock %}</div>
+</body>
+</html>

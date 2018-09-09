@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}News List{% endblock %}
+{% block body %}
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    function doquery() {
+        window.location.href='/query/' + $("#input_query").val()
+    }
+    function doquery_title() {
+        window.location.href='/query_title/' + $("#input_query").val()
+    }
+    function gotopage() {
+        window.location.href='/news/' + $("#tarpage").val()
+    }
+    </script>
+<h1>News List:</h1>
+    <a href="/news/1"><button>Back to news</button></a><br><br>
+    <input type="text" placeholder="type in to search" id="input_query" value="{{ query_text }}"><button onclick="doquery()">Search</button><button onclick="doquery_title()">Search(Only title)</button>
+<ul>
+    {% for s in news %}
+        <li><a href="/news_content/{{ s.id }}">{{ s.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

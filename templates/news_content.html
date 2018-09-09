@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ data.title }}{% endblock %}
+{% block body %}
+<h1>{{ data.title }}</h1>
+    {% for c in data.content %}
+<p style="margin-left: 15px" >
+    {{ c }}
+</p>
+{% endfor %}
+    <ul>
+    <li><a href="{{ data.url }}">Go to original page</a></li>
+    <li><a href="/news">Back to news list</a></li>
+    </ul>
+{% endblock %}
